@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Philosophy Bio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* ===== MAIN CONTAINER ===== */
+
+.container {
+    max-width: 720px;
+    padding: 70px 50px;
+    text-align: center;
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.25),
+        inset 0 0 25px rgba(255,255,255,0.08);
+}
+
+/* ===== NAME ===== */
+
+h1 {
+    font-size: 52px;
+    font-weight: 300;
+    letter-spacing: 6px;
+    margin-bottom: 35px;
+    text-shadow:
+        0 0 10px #fff,
+        0 0 40px rgba(255,255,255,0.6);
+}
+
+/* ===== BIO TEXT ===== */
+
+.bio {
+    font-size: 19px;
+    line-height: 2.1;
+    opacity: 0.9;
+}
+
+/* ===== BUTTONS ===== */
+
+.buttons {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.buttons a {
+    text-decoration: none;
+    color: #fff;
+    padding: 12px 26px;
+    border-radius: 30px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: 0.3s ease;
+    box-shadow: 0 0 10px rgba(255,255,255,0.25);
+}
+
+.buttons a:hover {
+    background: #fff;
+    color: #000;
+    box-shadow:
+        0 0 15px #fff,
+        0 0 40px rgba(255,255,255,0.8);
+}
+
+/* ===== DIVIDER ===== */
+
+.divider {
+    width: 120px;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+    margin: 40px auto;
+    box-shadow: 0 0 10px #fff;
+}
+
+/* ===== FOOTER ===== */
+
+.footer {
+    font-size: 13px;
+    opacity: 0.5;
+    letter-spacing: 2px;
+}
+
+/* ===== SUBTLE ANIMATION ===== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeIn 1.2s ease;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>nepetapip3</h1>
+
+    <div class="bio">
+        Приветик. Я nepetapip3 <br>
+        Увлекаюсь (вайб)кодингом, Arduino, прошивом телефонов...<br>
+        День рождения — 6 января.
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="buttons">
+        <a href="https://t.me/nepetapip3" target="_blank">TELEGRAM</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="footer">
+        (´• ω •`)
+    </div>
+</div>
+
+</body>
+</html>
+
