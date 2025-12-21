@@ -2,14 +2,14 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>nepetapip3 - bio</title>
+<title>nepetapip3</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-/* Base */
+/* ================= BASE ================= */
 body {
     margin: 0;
     height: 100vh;
@@ -22,7 +22,7 @@ body {
     overflow: hidden;
 }
 
-/* Noise */
+/* ================= NOISE ================= */
 .noise {
     position: fixed;
     inset: 0;
@@ -44,7 +44,7 @@ body {
     100% { transform: translate(0,0); }
 }
 
-/* ❄️ Snow layers */
+/* ================= SNOW ================= */
 .snow {
     position: fixed;
     inset: 0;
@@ -60,7 +60,7 @@ body {
     background-repeat: repeat;
 }
 
-/* Small fast snow */
+/* small fast */
 .snow::before {
     background-image:
         radial-gradient(1px 1px at 10% 10%, rgba(255,255,255,0.6), transparent),
@@ -70,7 +70,7 @@ body {
     animation: snowFast 14s linear infinite;
 }
 
-/* Bigger slow snow */
+/* big slow */
 .snow::after {
     background-image:
         radial-gradient(2.5px 2.5px at 20% 20%, rgba(255,255,255,0.7), transparent),
@@ -81,16 +81,16 @@ body {
 }
 
 @keyframes snowFast {
-    0%   { transform: translate(0, 0); }
+    0% { transform: translate(0,0); }
     100% { transform: translate(-80px, 400px); }
 }
 
 @keyframes snowSlow {
-    0%   { transform: translate(0, 0); }
+    0% { transform: translate(0,0); }
     100% { transform: translate(100px, 600px); }
 }
 
-/* Terminal box */
+/* ================= TERMINAL ================= */
 .terminal {
     position: relative;
     padding: 50px 70px 65px;
@@ -103,24 +103,21 @@ body {
     z-index: 4;
 }
 
-/* Nick */
+/* ================= TEXT ================= */
 .nick {
     font-size: 52px;
     letter-spacing: 6px;
-    text-shadow:
-        0 0 10px #fff,
-        0 0 30px #fff;
-    animation: flicker 4s infinite;
+    text-shadow: 0 0 10px #fff, 0 0 30px #fff;
+    animation: flicker 3s infinite;
 }
 
 @keyframes flicker {
-    0%, 100% { opacity: 1; }
-    5% { opacity: 0.6; }
-    10% { opacity: 1; }
-    15% { opacity: 0.4; }
+    0%,100%{opacity:1;}
+    5%{opacity:.6;}
+    10%{opacity:1;}
+    15%{opacity:.4;}
 }
 
-/* Cursor */
 .cursor {
     display: inline-block;
     width: 10px;
@@ -128,67 +125,45 @@ body {
 }
 
 @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+    0%,50%{opacity:1;}
+    51%,100%{opacity:0;}
 }
 
-/* Divider */
 .divider {
-    width: 170px;
-    height: 2px;
-    background: rgba(255,255,255,0.8);
+    width: 220px;
+    height: 1px;
     margin: 30px auto;
-    box-shadow: 0 0 10px #fff;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,.9), transparent);
 }
 
-/* Text */
 .status {
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 17px;
+    font-size: 18px;
     letter-spacing: 2px;
-    opacity: 0.75;
+    opacity: .75;
 }
 
 .tags {
     font-family: 'IBM Plex Sans', sans-serif;
     margin-top: 18px;
-    font-size: 15px;
+    font-size: 16px;
     letter-spacing: 1.6px;
     line-height: 2.2;
-    opacity: 0.65;
+    opacity: .65;
 }
 
-/* Telegram button */
-.telegram-btn {
+/* ================= BUTTONS ================= */
+.buttons {
     margin-top: 28px;
-    display: inline-block;
-    padding: 10px 28px;
-    border-radius: 13px;
-    border: 1px solid rgba(255,255,255,0.6);
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    color: #fff;
-    background: transparent;
-    text-decoration: none;
-    opacity: 0.8;
-    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
 }
 
-.telegram-btn:hover {
-    background: #fff;
-    color: #000;
-    box-shadow:
-        0 0 20px rgba(255,255,255,0.9),
-        inset 0 0 10px rgba(255,255,255,0.6);
-}
-
-/* Telegram button */
+.telegram-btn,
 .github-btn {
-    margin-top: 28px;
-    display: inline-block;
     padding: 10px 28px;
-    border-radius: 13px;
+    border-radius: 14px;
     border: 1px solid rgba(255,255,255,0.6);
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 14px;
@@ -196,35 +171,74 @@ body {
     color: #fff;
     background: transparent;
     text-decoration: none;
-    opacity: 0.8;
-    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    opacity: .8;
+    transition: background .25s, color .25s, box-shadow .25s;
 }
 
+.telegram-btn:hover,
 .github-btn:hover {
     background: #fff;
     color: #000;
-    box-shadow:
-        0 0 20px rgba(255,255,255,0.9),
-        inset 0 0 10px rgba(255,255,255,0.6);
+    box-shadow: 0 0 20px rgba(255,255,255,.9);
 }
 
-/* Easter egg */
+/* ================= EASTER ================= */
 .easter-egg {
     position: absolute;
     bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 15px;
-    letter-spacing: 2px;
     font-family: 'IBM Plex Sans', sans-serif;
-    opacity: 0.25;
+    opacity: .25;
     color: #aaa;
     text-decoration: none;
-    transition: opacity 0.3s;
 }
 
-.easter-egg:hover {
-    opacity: 0.6;
+.easter-egg:hover { opacity:.6; }
+
+/* ================= MOBILE ================= */
+@media (max-width: 600px) {
+
+    .terminal {
+        width: 90%;
+        padding: 36px 24px 48px;
+    }
+
+    .nick {
+        font-size: 38px;
+        letter-spacing: 4px;
+    }
+
+    .divider {
+        width: 180px;
+        margin: 24px auto;
+    }
+
+    .status {
+        font-size: 16px;
+    }
+
+    .tags {
+        font-size: 14px;
+        line-height: 2;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .telegram-btn,
+    .github-btn {
+        width: 100%;
+        padding: 12px 0;
+        border-radius: 16px;
+    }
+
+    .noise {
+        opacity: .4;
+    }
 }
 </style>
 </head>
@@ -242,21 +256,16 @@ body {
 
     <div class="tags">
         Я nepetapip3 или просто непета<br>
-        Увлекаюсь (вайб)кодингом, занимаюсь arduino, прошивом телефонов...<br>
+        Увлекаюсь (вайб)кодингом, Arduino, прошивом телефонов...<br>
         Люблю создавать простенькие сайты и тг ботов
     </div>
 
-    <a class="telegram-btn" href="https://t.me/nepetapip3" target="_blank">
-        TELEGRAM
-    </a>
-    
-        <a class="github-btn" href="https://github.com/nepetapip3" target="_blank">
-        GITHUB
-    </a>
+    <div class="buttons">
+        <a class="telegram-btn" href="https://t.me/nepetapip3" target="_blank">TELEGRAM</a>
+        <a class="github-btn" href="https://github.com/nepetapip3" target="_blank">GITHUB</a>
+    </div>
 
-    <a class="easter-egg" href="pashalka.jpg">
-        :3
-    </a>
+    <a class="easter-egg" href="bigrat.jpg">:3</a>
 </div>
 
 </body>
