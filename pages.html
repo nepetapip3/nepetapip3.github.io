@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>pages</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+/* ================= BASE ================= */
+body {
+    margin: 0;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    font-family: 'Share Tech Mono', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* ================= NOISE ================= */
+.noise {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.02),
+        rgba(255,255,255,0.02) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    animation: noise 0.2s infinite;
+    z-index: 3;
+}
+
+@keyframes noise {
+    0%,100% { transform: translate(0,0); }
+    50% { transform: translate(-1px,1px); }
+}
+
+/* ================= SNOW ================= */
+.snow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.snow::before,
+.snow::after {
+    content: "";
+    position: absolute;
+    inset: -200%;
+    background-repeat: repeat;
+}
+
+.snow::before {
+    background-image:
+        radial-gradient(1px 1px at 10% 10%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 40% 30%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.6), transparent);
+    background-size: 120px 120px;
+    animation: snowFast 14s linear infinite;
+}
+
+.snow::after {
+    background-image:
+        radial-gradient(3px 3px at 20% 20%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(2px 2px at 60% 50%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2.5px 2.5px at 80% 90%, rgba(255,255,255,0.5), transparent);
+    background-size: 260px 260px;
+    animation: snowSlow 28s linear infinite;
+}
+
+@keyframes snowFast {
+    to { transform: translate(-80px, 400px); }
+}
+@keyframes snowSlow {
+    to { transform: translate(100px, 600px); }
+}
+
+/* ================= TERMINAL ================= */
+.terminal {
+    position: relative;
+    padding: 50px 70px 65px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow:
+        0 0 15px rgba(255,255,255,0.6),
+        inset 0 0 20px rgba(255,255,255,0.05);
+    text-align: center;
+    z-index: 4;
+}
+
+/* ================= TEXT ================= */
+.nick {
+    font-size: 42px;
+    letter-spacing: 6px;
+    text-shadow: 0 0 10px #fff, 0 0 30px #fff;
+}
+
+.divider {
+    width: 220px;
+    height: 1px;
+    margin: 30px auto;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,.9), transparent);
+}
+
+.subtitle {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 19px;
+    letter-spacing: 2px;
+    opacity: .7;
+}
+
+/* ================= LINKS ================= */
+.page-links {
+    margin-top: 28px;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.page-links a {
+    display: block;
+    margin: 16px 0;
+    font-size: 18px;
+    letter-spacing: 1.6px;
+    color: #aaa;
+    opacity: .45;
+    text-decoration: none;
+    transition: opacity .3s, text-shadow .3s;
+}
+
+.page-links a:hover {
+    opacity: .9;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* ================= BACK ================= */
+.back {
+    display: block;
+    margin-top: 28px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1.6px;
+    color: #aaa;
+    opacity: .35;
+    text-decoration: none;
+}
+
+.back:hover { opacity: .7; }
+
+/* ================= MOBILE ================= */
+@media (max-width: 600px) {
+
+    .terminal {
+        width: 90%;
+        padding: 36px 24px 48px;
+    }
+
+    .nick {
+        font-size: 34px;
+        letter-spacing: 4px;
+    }
+
+    .divider {
+        width: 180px;
+        margin: 24px auto;
+    }
+
+    .page-links a {
+        font-size: 15px;
+    }
+
+    .noise {
+        opacity: .4;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="snow"></div>
+<div class="noise"></div>
+
+<div class="terminal">
+    <div class="nick">доступные страницы</div>
+
+    <div class="divider"></div>
+
+    <div class="subtitle">навигация по сайту</div>
+
+    <div class="page-links">
+        <a href="https://nepetapip3.github.io/minigames">
+            мини-игры
+        </a>
+        <a href="https://nepetapip3.github.io/testing">
+            тестовая страничка
+        </a>
+        <a href="https://nepetapip3.github.io/dvd-rat">
+            DVD крыска
+        </a>
+        <a href="https://nepetapip3.github.io/webfetch">
+            webfetch (только для ПК)
+        </a>
+    </div>
+
+    <a class="back" href="index.html">
+        ← назад
+    </a>
+</div>
+
+</body>
+</html>
+
