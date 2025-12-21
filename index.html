@@ -2,14 +2,12 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>nepetapip3 - bio</title>
+<title>nepetapip3</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-/* ================= BASE ================= */
 body {
     margin: 0;
     height: 100vh;
@@ -22,7 +20,7 @@ body {
     overflow: hidden;
 }
 
-/* ================= NOISE ================= */
+/* noise */
 .noise {
     position: fixed;
     inset: 0;
@@ -33,100 +31,73 @@ body {
         transparent 1px,
         transparent 2px
     );
-    pointer-events: none;
     animation: noise 0.2s infinite;
+    pointer-events: none;
     z-index: 3;
 }
-
 @keyframes noise {
-    0% { transform: translate(0,0); }
-    50% { transform: translate(-1px,1px); }
-    100% { transform: translate(0,0); }
+    0%,100%{transform:translate(0,0)}
+    50%{transform:translate(-1px,1px)}
 }
 
-/* ================= SNOW ================= */
+/* snow */
 .snow {
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 1;
 }
-
 .snow::before,
 .snow::after {
-    content: "";
-    position: absolute;
-    inset: -200%;
-    background-repeat: repeat;
+    content:"";
+    position:absolute;
+    inset:-200%;
+    background-repeat:repeat;
 }
-
-/* мелкий быстрый */
 .snow::before {
     background-image:
-        radial-gradient(1px 1px at 10% 10%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1px 1px at 40% 30%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.6), transparent);
-    background-size: 120px 120px;
-    animation: snowFast 14s linear infinite;
+        radial-gradient(1px 1px at 10% 10%, rgba(255,255,255,.6), transparent),
+        radial-gradient(1px 1px at 40% 30%, rgba(255,255,255,.5), transparent),
+        radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,.6), transparent);
+    background-size:120px 120px;
+    animation:snowFast 14s linear infinite;
 }
-
-/* крупный медленный */
 .snow::after {
     background-image:
-        radial-gradient(2.5px 2.5px at 20% 20%, rgba(255,255,255,0.7), transparent),
-        radial-gradient(3px 3px at 60% 50%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(2px 2px at 80% 90%, rgba(255,255,255,0.5), transparent);
-    background-size: 260px 260px;
-    animation: snowSlow 28s linear infinite;
+        radial-gradient(3px 3px at 20% 20%, rgba(255,255,255,.7), transparent),
+        radial-gradient(2px 2px at 60% 50%, rgba(255,255,255,.6), transparent),
+        radial-gradient(2.5px 2.5px at 80% 90%, rgba(255,255,255,.5), transparent);
+    background-size:260px 260px;
+    animation:snowSlow 28s linear infinite;
 }
-
 @keyframes snowFast {
-    0% { transform: translate(0,0); }
-    100% { transform: translate(-80px, 400px); }
+    to { transform: translate(-80px, 400px); }
 }
-
 @keyframes snowSlow {
-    0% { transform: translate(0,0); }
-    100% { transform: translate(100px, 600px); }
+    to { transform: translate(100px, 600px); }
 }
 
-/* ================= TERMINAL ================= */
+/* terminal */
 .terminal {
     position: relative;
     padding: 50px 70px 65px;
     border-radius: 18px;
-    border: 1px solid rgba(255,255,255,0.7);
-    box-shadow:
-        0 0 15px rgba(255,255,255,0.6),
-        inset 0 0 20px rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,.7);
+    box-shadow: 0 0 15px rgba(255,255,255,.6), inset 0 0 20px rgba(255,255,255,.05);
     text-align: center;
     z-index: 4;
 }
 
-/* ================= TEXT ================= */
 .nick {
     font-size: 52px;
     letter-spacing: 6px;
     text-shadow: 0 0 10px #fff, 0 0 30px #fff;
-    animation: flicker 3s infinite;
 }
-
-@keyframes flicker {
-    0%,100%{opacity:1;}
-    5%{opacity:.6;}
-    10%{opacity:1;}
-    15%{opacity:.4;}
-}
-
 .cursor {
-    display: inline-block;
-    width: 10px;
     animation: blink 1s infinite;
 }
-
 @keyframes blink {
-    0%,50%{opacity:1;}
-    51%,100%{opacity:0;}
+    50%{opacity:0}
 }
 
 .divider {
@@ -147,42 +118,36 @@ body {
     font-family: 'IBM Plex Sans', sans-serif;
     margin-top: 18px;
     font-size: 16px;
-    letter-spacing: 1.6px;
     line-height: 2.2;
     opacity: .65;
 }
 
-/* ================= BUTTONS ================= */
+/* buttons */
 .buttons {
     margin-top: 28px;
     display: flex;
     gap: 16px;
     justify-content: center;
 }
-
 .telegram-btn,
 .github-btn {
     padding: 10px 28px;
     border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,.6);
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 14px;
     letter-spacing: 1.5px;
     color: #fff;
-    background: transparent;
     text-decoration: none;
-    opacity: .8;
-    transition: background .25s, color .25s, box-shadow .25s;
+    transition: .25s;
 }
-
 .telegram-btn:hover,
 .github-btn:hover {
     background: #fff;
     color: #000;
-    box-shadow: 0 0 20px rgba(255,255,255,.9);
 }
 
-/* ================= NEW YEAR LINK ================= */
+/* grey links */
 .newyear-link {
     display: block;
     margin-top: 22px;
@@ -190,63 +155,20 @@ body {
     font-size: 14px;
     letter-spacing: 1.6px;
     color: #aaa;
-    opacity: 0.35;
+    opacity: .35;
     text-decoration: none;
-    transition: opacity 0.3s, text-shadow 0.3s;
+    transition: .3s;
 }
-
 .newyear-link:hover {
-    opacity: 0.7;
-    text-shadow: 0 0 8px rgba(255,255,255,0.4);
+    opacity: .7;
+    text-shadow: 0 0 8px rgba(255,255,255,.4);
 }
 
-/* ================= MOBILE ================= */
-@media (max-width: 600px) {
-
-    .terminal {
-        width: 90%;
-        padding: 36px 24px 48px;
-    }
-
-    .nick {
-        font-size: 38px;
-        letter-spacing: 4px;
-    }
-
-    .divider {
-        width: 180px;
-        margin: 24px auto;
-    }
-
-    .status {
-        font-size: 16px;
-    }
-
-    .tags {
-        font-size: 14px;
-        line-height: 2;
-    }
-
-    .buttons {
-        flex-direction: column;
-        gap: 14px;
-    }
-
-    .telegram-btn,
-    .github-btn {
-        width: 100%;
-        padding: 12px 0;
-        border-radius: 16px;
-    }
-
-    .newyear-link {
-        font-size: 13px;
-        margin-top: 18px;
-    }
-
-    .noise {
-        opacity: .4;
-    }
+/* mobile */
+@media (max-width:600px) {
+    .terminal { width:90%; padding:36px 24px 48px; }
+    .nick { font-size:38px; }
+    .buttons { flex-direction:column; }
 }
 </style>
 </head>
@@ -257,14 +179,13 @@ body {
 
 <div class="terminal">
     <div class="nick">nepetapip3<span class="cursor">_</span></div>
-
     <div class="divider"></div>
 
     <div class="status">Приветик.</div>
 
     <div class="tags">
         Я nepetapip3 или просто непета<br>
-        Увлекаюсь (вайб)кодингом, занимаюсь arduino, прошивом телефонов...<br>
+        Увлекаюсь (вайб)кодингом, Arduino, прошивом телефонов...<br>
         Люблю создавать простенькие сайты и тг ботов
     </div>
 
@@ -273,9 +194,8 @@ body {
         <a class="github-btn" href="https://github.com/nepetapip3" target="_blank">GITHUB</a>
     </div>
 
-    <a class="newyear-link" href="newyear.html">
-        отсчёт до нового года
-    </a>
+    <a class="newyear-link" href="newyear.html">отсчёт до нового года</a>
+    <a class="newyear-link" href="pages.html">доступные страницы</a>
 </div>
 
 </body>
