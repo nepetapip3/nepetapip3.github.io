@@ -1,4 +1,4 @@
-# 🐱 nepetapip3 / personal bio
+# 🐱 nepetapip3 / мое био
 
 <div align="center">
   <img src="https://img.shields.io/badge/Material%20You-3F51B5?style=for-the-badge&logo=material-design&logoColor=white" alt="Material You">
