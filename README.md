@@ -2,5 +2,5 @@
 
 ## About
 
-**Warning** code written by AI
+**Warning** code written by AI \n
 A simple bio with buttons, information, and more, in the Material Design style.
