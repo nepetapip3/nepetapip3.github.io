@@ -12,7 +12,7 @@ Simple biography card, with avatar, and social media buttons
 
 **DVD-Rat**
 
-A simple animation of a bigrat in the DVD style. Nothing more
+A simple animation of a bigrat in the DVD style. Nothing more.
 
 **GUSENITSY**
 
