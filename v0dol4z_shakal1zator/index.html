@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="ico.jpg">
+  <title>shakalizer — nepetapip3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:        #121212;
+      --surface:   #1e1e1e;
+      --surface2:  #2c2c2c;
+      --primary:   #ffffff;
+      --primary-v: #3700b3;
+      --on-primary:#000000;
+      --on-bg:     #e1e1e1;
+      --on-surface:#cfcfcf;
+      --divider:   rgba(255,255,255,.12);
+      --ripple:    rgba(187,134,252,.2);
+      --elev1:     0 2px 4px rgba(0,0,0,.6);
+      --elev2:     0 4px 8px rgba(0,0,0,.7);
+      --elev3:     0 8px 24px rgba(0,0,0,.8);
+      --accent:    #ce9ffc;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--on-bg);
+      font-family: 'Google Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      padding-top: 80px;
+    }
+
+    .app-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: var(--surface);
+      box-shadow: var(--elev1);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 10;
+      gap: 10px;
+    }
+    .app-bar-title {
+      font-family: 'Google Sans Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--primary);
+      letter-spacing: .05em;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      box-shadow: var(--elev3);
+      padding: 54px 46px 46px;
+      max-width: 620px;
+      width: 100%;
+      text-align: center;
+      animation: fadeUp .5s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .headline {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--on-bg);
+      margin-bottom: 12px;
+    }
+    .subheadline {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--on-surface);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--divider);
+      margin: 0 -46px 32px;
+    }
+
+    /* UPLOAD ZONE */
+    .upload-zone {
+      border: 2px dashed rgba(255,255,255,.2);
+      border-radius: 12px;
+      padding: 32px 20px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--accent);
+      background: rgba(206,159,252,.05);
+    }
+    .upload-zone input[type=file] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .upload-icon {
+      font-size: 40px !important;
+      color: rgba(255,255,255,.3);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .upload-label {
+      font-size: 14px;
+      color: var(--on-surface);
+      font-weight: 400;
+    }
+    .upload-label span {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* PREVIEW */
+    #preview-wrap {
+      display: none;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    #preview-img {
+      max-width: 100%;
+      max-height: 240px;
+      border-radius: 10px;
+      box-shadow: var(--elev2);
+      object-fit: contain;
+    }
+    .remove-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      background: rgba(0,0,0,.6);
+      border: none;
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      transition: background .2s;
+    }
+    .remove-btn:hover { background: rgba(200,0,0,.7); }
+
+    /* LEVEL SECTION */
+    .level-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--on-surface);
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .level-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .level-btn {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface2);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 10px 4px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+      font-family: 'Google Sans', sans-serif;
+    }
+    .level-btn .lvl-num {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--on-bg);
+    }
+    .level-btn .lvl-emoji {
+      font-size: 18px;
+      line-height: 1;
+    }
+    .level-btn:hover {
+      border-color: rgba(206,159,252,.4);
+      background: rgba(206,159,252,.08);
+    }
+    .level-btn.selected {
+      border-color: var(--accent);
+      background: rgba(206,159,252,.12);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    .level-btn.selected .lvl-num { color: var(--accent); }
+
+    /* ACTION BTN */
+    .md-btn {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-family: 'Google Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      padding: 0 24px;
+      height: 48px;
+      cursor: pointer;
+      box-shadow: var(--elev1);
+      transition: box-shadow .2s, background .2s;
+      min-width: 180px;
+      justify-content: center;
+    }
+    .md-btn:hover:not(:disabled) {
+      background: var(--accent);
+      box-shadow: var(--elev2);
+    }
+    .md-btn:active:not(:disabled) { box-shadow: none; }
+    .md-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    .ripple-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0,0,0,.25);
+      transform: scale(0);
+      animation: ripple .5s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    /* STATUS */
+    #status {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--on-surface);
+      min-height: 20px;
+      font-family: 'Google Sans Mono', monospace;
+    }
+
+    /* RESULT */
+    #result-wrap {
+      display: none;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--divider);
+    }
+    #result-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--on-surface);
+      margin-bottom: 12px;
+    }
+    #result-img {
+      max-width: 100%;
+      max-height: 280px;
+      border-radius: 10px;
+      box-shadow: var(--elev2);
+      object-fit: contain;
+      margin-bottom: 16px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #result-caption {
+      font-size: 14px;
+      color: var(--on-surface);
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    /* PROGRESS BAR */
+    .progress-bar-wrap {
+      display: none;
+      width: 100%;
+      height: 4px;
+      background: var(--surface2);
+      border-radius: 2px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width .3s ease;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: rgba(255,255,255,.3);
+      letter-spacing: .04em;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 16px; padding-top: 72px; }
+      .card { padding: 32px 24px 28px; }
+      .divider { margin: 0 -24px 24px; }
+      .headline { font-size: 18px; }
+      .subheadline { font-size: 14px; margin-bottom: 24px; }
+      .level-grid { grid-template-columns: repeat(6, 1fr); gap: 6px; }
+      .level-btn { padding: 8px 2px; }
+      .level-btn .lvl-num { font-size: 14px; }
+      .level-btn .lvl-emoji { font-size: 15px; }
+      .md-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-bar">
+    <span class="material-icons" style="font-size:18px">image_search</span>
+    <span class="app-bar-title">shakalizer — nepetapip3.github.io</span>
+  </div>
+
+  <div class="card">
+    <h1 class="headline">v0dol4z shakal1zator</h1>
+    <p class="subheadline">drop an image — and I'll bring it to the desired level of jpeg corruption.</p>
+
+    <div class="divider"></div>
+
+    <div class="upload-zone" id="upload-zone">
+      <input type="file" id="file-input" accept="image/*" />
+      <span class="material-icons upload-icon">upload_file</span>
+      <div class="upload-label">drop here or <span>choose file</span></div>
+    </div>
+
+    <div id="preview-wrap">
+      <img id="preview-img" src="" alt="preview" />
+      <button class="remove-btn" id="remove-btn" title="убрать">
+        <span class="material-icons" style="font-size:18px">close</span>
+      </button>
+    </div>
+
+    <div class="level-label">jpeg corruption lvl</div>
+    <div class="level-grid">
+      <button class="level-btn" data-level="1"><span class="lvl-num">1</span><span class="lvl-emoji">😶</span></button>
+      <button class="level-btn" data-level="2"><span class="lvl-num">2</span><span class="lvl-emoji">🙃</span></button>
+      <button class="level-btn" data-level="3"><span class="lvl-num">3</span><span class="lvl-emoji">🗑️</span></button>
+      <button class="level-btn" data-level="4"><span class="lvl-num">4</span><span class="lvl-emoji">💀</span></button>
+      <button class="level-btn" data-level="5"><span class="lvl-num">5</span><span class="lvl-emoji">🧟</span></button>
+      <button class="level-btn" data-level="6"><span class="lvl-num">5</span><span class="lvl-emoji">👹</span></button>
+    </div>
+
+    <button class="md-btn" id="shakal-btn" disabled>
+      <span class="material-icons" style="font-size:18px">auto_fix_high</span>
+      jpeg corruption
+    </button>
+
+    <div class="progress-bar-wrap" id="progress-wrap">
+      <div class="progress-bar-inner" id="progress-bar"></div>
+    </div>
+
+    <div id="status"></div>
+
+    <div id="result-wrap">
+      <div id="result-label">result</div>
+      <img id="result-img" src="" alt="result" />
+      <div id="result-caption"></div>
+      <a class="md-btn" id="download-btn" download="shakal.jpg">
+        <span class="material-icons" style="font-size:18px">download</span>
+        download!
+      </a>
+    </div>
+  </div>
+
+  <footer id="footer-text">nepetapip3 · github.io</footer>
+
+  <script>
+    let selectedLevel = null;
+    let imageFile     = null;
+
+    const captions = {
+        1:  "lvl 1: fine",
+        2:  "lvl 2: it's already worse",
+        3:  "lvl 3: nah uh",
+        4:  "lvl 4: horrible",
+        5:  "lvl 5: are we deadass",
+        6:  "lvl 6: ok, im out",
+    };
+
+    const levelParams = {
+      1:  { quality: 0.85, scale: 1.00, passes: 1 },
+      2:  { quality: 0.70, scale: 0.95, passes: 1 },
+      3:  { quality: 0.55, scale: 0.85, passes: 2 },
+      4:  { quality: 0.40, scale: 0.75, passes: 2 },
+      5:  { quality: 0.30, scale: 0.65, passes: 3 },
+      6:  { quality: 0.20, scale: 0.55, passes: 3 },
+      7:  { quality: 0.12, scale: 0.45, passes: 4 },
+      8:  { quality: 0.06, scale: 0.35, passes: 5 },
+      9:  { quality: 0.03, scale: 0.25, passes: 6 },
+      10: { quality: 0.01, scale: 0.15, passes: 8 },
+    };
+
+    const fileInput   = document.getElementById('file-input');
+    const uploadZone  = document.getElementById('upload-zone');
+    const previewWrap = document.getElementById('preview-wrap');
+    const previewImg  = document.getElementById('preview-img');
+    const removeBtn   = document.getElementById('remove-btn');
+    const shakalBtn   = document.getElementById('shakal-btn');
+    const statusEl    = document.getElementById('status');
+    const resultWrap  = document.getElementById('result-wrap');
+    const resultImg   = document.getElementById('result-img');
+    const resultCaption = document.getElementById('result-caption');
+    const downloadBtn = document.getElementById('download-btn');
+    const progressWrap = document.getElementById('progress-wrap');
+    const progressBar  = document.getElementById('progress-bar');
+
+    function updateBtn() {
+      shakalBtn.disabled = !(imageFile && selectedLevel);
+    }
+
+    function setProgress(pct) {
+      progressBar.style.width = pct + '%';
+    }
+
+    function loadFile(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      imageFile = file;
+      const url = URL.createObjectURL(file);
+      previewImg.src = url;
+      uploadZone.style.display = 'none';
+      previewWrap.style.display = 'block';
+      resultWrap.style.display = 'none';
+      statusEl.textContent = '';
+      updateBtn();
+    }
+
+    fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+
+    uploadZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      loadFile(e.dataTransfer.files[0]);
+    });
+
+    removeBtn.addEventListener('click', () => {
+      imageFile = null;
+      previewImg.src = '';
+      fileInput.value = '';
+      previewWrap.style.display = 'none';
+      uploadZone.style.display = 'block';
+      resultWrap.style.display = 'none';
+      statusEl.textContent = '';
+      updateBtn();
+    });
+
+    document.querySelectorAll('.level-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedLevel = parseInt(this.dataset.level);
+        updateBtn();
+        rippleEffect(this, { clientX: this.getBoundingClientRect().left + this.offsetWidth/2,
+                             clientY: this.getBoundingClientRect().top  + this.offsetHeight/2 });
+      });
+    });
+
+    shakalBtn.addEventListener('click', function(e) {
+      rippleEffect(this, e);
+      shakalize();
+    });
+
+    async function shakalize() {
+      const { quality, scale, passes } = levelParams[selectedLevel];
+
+      shakalBtn.disabled = true;
+      progressWrap.style.display = 'block';
+      setProgress(0);
+      resultWrap.style.display = 'none';
+
+      const totalSteps = passes;
+
+      // Load original image
+      const bitmap = await createImageBitmap(imageFile);
+      const origW = bitmap.width;
+      const origH = bitmap.height;
+
+      const offscreen = new OffscreenCanvas(origW, origH);
+      const ctx = offscreen.getContext('2d');
+      ctx.drawImage(bitmap, 0, 0);
+
+      let currentW = origW;
+      let currentH = origH;
+
+      for (let pass = 0; pass < passes; pass++) {
+        statusEl.textContent = `pls wait... ${pass + 1}/${passes}`;
+
+        const newW = Math.max(16, Math.round(origW * scale));
+        const newH = Math.max(16, Math.round(origH * scale));
+
+        const smallCanvas = new OffscreenCanvas(newW, newH);
+        const smallCtx = smallCanvas.getContext('2d');
+        smallCtx.drawImage(offscreen, 0, 0, currentW, currentH, 0, 0, newW, newH);
+
+        const blob = await smallCanvas.convertToBlob({ type: 'image/jpeg', quality });
+        const newBitmap = await createImageBitmap(blob);
+
+        if (pass < passes - 1) {
+          offscreen.width = origW;
+          offscreen.height = origH;
+          ctx.imageSmoothingEnabled = false;
+          ctx.drawImage(newBitmap, 0, 0, origW, origH);
+          currentW = origW;
+          currentH = origH;
+        } else {
+          offscreen.width = newW;
+          offscreen.height = newH;
+          const lastCtx = offscreen.getContext('2d');
+          lastCtx.drawImage(newBitmap, 0, 0);
+          currentW = newW;
+          currentH = newH;
+        }
+
+        setProgress(Math.round(((pass + 1) / passes) * 100));
+        await new Promise(r => setTimeout(r, 30)); // это пиздец
+      }
+
+      const finalBlob = await offscreen.convertToBlob({ type: 'image/jpeg', quality });
+      const finalUrl  = URL.createObjectURL(finalBlob);
+
+      resultImg.src = finalUrl;
+      downloadBtn.href = finalUrl;
+      downloadBtn.download = `shakal_level_${selectedLevel}.jpg`;
+      resultCaption.textContent = captions[selectedLevel];
+      resultWrap.style.display = 'block';
+
+      statusEl.textContent = 'done!';
+      shakalBtn.disabled = false;
+
+      resultWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function rippleEffect(btn, e) {
+      const circle = document.createElement('span');
+      const rect   = btn.getBoundingClientRect();
+      const size   = Math.max(rect.width, rect.height);
+      circle.className = 'ripple-circle';
+      circle.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${e.clientX - rect.left - size/2}px;
+        top:${e.clientY  - rect.top  - size/2}px;
+      `;
+      btn.appendChild(circle);
+      circle.addEventListener('animationend', () => circle.remove());
+    }
+
+    document.querySelectorAll('.md-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) { rippleEffect(this, e); });
+    });
+
+    const footerVariants = [
+      "nepetapip3.lol?",
+      "nepetacsv? who is this?",
+      "nepetapip3",
+      "sudo rm -rf --no-preserve-root /*",
+      "404 not found",
+      "what is nekobrawl?",
+      "i use cachyos btw :3",
+      "does anyone actually read this?",
+      "lol",
+      "whoami",
+      "jpeg artifacts are beautiful",
+    ];
+    document.getElementById('footer-text').textContent =
+      footerVariants[Math.floor(Math.random() * footerVariants.length)];
+  </script>
+</body>
+</html>
