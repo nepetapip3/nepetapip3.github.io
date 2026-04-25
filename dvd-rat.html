@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="texture.jpg">
+<title>DVD Крысюк</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: #1a1a1e;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #dvd {
+    position: absolute;
+    width: 200px;
+    height: 160px;
+    will-change: transform;
+  }
+
+  #dvd img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #watermark {
+    position: fixed;
+    bottom: 14px;
+    right: 20px;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: #959595;
+    user-select: none;
+    pointer-events: none;
+    font-family: 'Courier New', monospace;
+  }
+</style>
+</head>
+<body>
+
+<div id="dvd">
+  <img src="texture.jpg" alt="rat" draggable="false" />
+</div>
+<div id="watermark">by nepetapip3</div>
+
+<script>
+  const dvd = document.getElementById('dvd');
+
+  const SIZE_W = 220;
+  const SIZE_H = 180;
+
+  let x = Math.random() * (window.innerWidth - SIZE_W);
+  let y = Math.random() * (window.innerHeight - SIZE_H);
+  let speed = 1.0;
+  let vx = 2.5;
+  let vy = 2.0;
+
+  window.addEventListener('wheel', (e) => {
+    speed += e.deltaY > 0 ? 0.15 : -0.15;
+    speed = Math.max(0.1, Math.min(speed, 10));
+  });
+
+  function animate() {
+    x += vx * speed;
+    y += vy * speed;
+
+    if (x <= 0) { x = 0; vx = Math.abs(vx); }
+    else if (x + SIZE_W >= window.innerWidth) { x = window.innerWidth - SIZE_W; vx = -Math.abs(vx); }
+
+    if (y <= 0) { y = 0; vy = Math.abs(vy); }
+    else if (y + SIZE_H >= window.innerHeight) { y = window.innerHeight - SIZE_H; vy = -Math.abs(vy); }
+
+    dvd.style.transform = `translate(${x}px, ${y}px)`;
+    requestAnimationFrame(animate);
+  }
+
+  dvd.style.transform = `translate(${x}px, ${y}px)`;
+  requestAnimationFrame(animate);
+</script>
+</body>
+</html>
