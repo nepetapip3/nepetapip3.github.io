@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ГУСЕНИЦЫ</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 10% 10%, #ccff00, transparent 40%),
+    radial-gradient(circle at 90% 90%, #00ff66, transparent 40%),
+    repeating-linear-gradient(
+      45deg,
+      #7fff00,
+      #7fff00 15px,
+      #2e8b57 15px,
+      #2e8b57 30px
+    );
+  animation: bgTrip 3s infinite linear;
+}
+
+@keyframes bgTrip {
+  0% { filter: hue-rotate(0deg) saturate(150%); }
+  100% { filter: hue-rotate(360deg) saturate(300%); }
+}
+
+/* АПОКАЛИПСИС */
+.apocalypse {
+  animation: bgTrip 0.3s infinite linear !important;
+}
+
+/* ТРЯСКА */
+@keyframes shake {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(5px,-5px); }
+  50% { transform: translate(-5px,5px); }
+  75% { transform: translate(5px,5px); }
+  100% { transform: translate(-5px,-5px); }
+}
+
+.shake {
+  animation: shake 0.15s infinite;
+}
+
+/* ЗАГОЛОВОК */
+h1 {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(48px, 10vw, 90px);
+  font-family:
+    "Comic Sans MS",
+    "Comic Neue",
+    "Papyrus",
+    "Impact",
+    "Arial Black",
+    cursive;
+  color: #004400;
+  letter-spacing: 0.2em;
+  text-shadow:
+    6px 6px 0 #adff2f,
+    -6px -6px 0 #7fff00,
+    0 0 20px #00ff00;
+  animation: idiotFont 0.4s infinite alternate;
+  z-index: 10;
+}
+
+@keyframes idiotFont {
+  0% { transform: scale(1) rotate(-3deg); }
+  100% { transform: scale(1.2) rotate(3deg); }
+}
+
+/* КНОПКА МУЗЫКИ */
+.music-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  padding: 12px 20px;
+  background: #7fff00;
+  border: 4px solid #004400;
+  border-radius: 20px;
+  font-family: Impact, Comic Sans MS;
+  cursor: pointer;
+  z-index: 100;
+}
+
+/* ГУСЕНИЦЫ */
+.gus {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  animation: chaos linear infinite;
+}
+
+@keyframes chaos {
+  0% { transform: translate(-200px, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(50vw, -50vh) rotate(720deg) scale(2); }
+  100% { transform: translate(120vw, 100vh) rotate(1440deg) scale(0.5); }
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="title">ГУСЕНИЦЫ.HTML</h1>
+
+<button class="music-btn" id="musicBtn">
+▶ ВКЛЮЧИТЬ ГУСЕНИЧНУЮ МУЗЫКУ
+</button>
+
+<audio id="music" loop>
+  <source src="omfg-hello.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const GUS = "🐛";
+const music = document.getElementById("music");
+const btn = document.getElementById("musicBtn");
+const body = document.body;
+const title = document.getElementById("title");
+
+let spawnRate = 40;
+let apocalypse = false;
+
+btn.addEventListener("click", () => {
+  music.volume = 0.6;
+  music.play();
+  btn.style.display = "none";
+});
+
+function spawnGus(sizeBoost = 1) {
+  const g = document.createElement("div");
+  g.className = "gus";
+  g.textContent = GUS;
+  g.style.left = Math.random() * 100 + "vw";
+  g.style.top = Math.random() * 100 + "vh";
+  g.style.fontSize = (Math.random() * 80 + 20) * sizeBoost + "px";
+  g.style.animationDuration = Math.random() * 5 + 1 + "s";
+  document.body.appendChild(g);
+  setTimeout(() => g.remove(), 15000);
+}
+
+setInterval(() => spawnGus(apocalypse ? 2.5 : 1), () => spawnRate);
+
+/* ⏱️ ТАЙМЕР АПОКАЛИПСИСА — 5 МИНУТ */
+setTimeout(() => {
+  apocalypse = true;
+
+  body.classList.add("apocalypse", "shake");
+  title.textContent = "АПОКАЛИПСИС ГУСЕНИЦ";
+
+  spawnRate = 5; // ЛЮТЫЙ СПАВН
+  music.volume = 0.9;
+
+  // ГУСЕНИЧНЫЙ ВЗРЫВ
+  setInterval(() => {
+    for (let i = 0; i < 100; i++) spawnGus(3);
+  }, 2000);
+
+}, 5 * 60 * 1000); // 5 минут
+</script>
+
+</body>
+</html>
+

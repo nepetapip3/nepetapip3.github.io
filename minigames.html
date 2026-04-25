@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="icon_minigames.jpg">
+<title>минигеймс page бесплатно</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#1a1a1a; --surf:#242424; --surf2:#2e2e2e; --surf3:#383838;
+  --brd:#3a3a3a; --acc:#b0bec5; --blue:#42a5f5; --green:#66bb6a;
+  --red:#ef5350; --yellow:#ffa726; --txt:#eceff1; --txt2:#90a4ae; --txt3:#546e7a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--txt);font-family:'Roboto',sans-serif;min-height:100vh;}
+
+nav{background:var(--surf);border-bottom:1px solid var(--brd);padding:0 20px;
+    height:56px;display:flex;align-items:center;position:sticky;top:0;z-index:99;
+    box-shadow:0 2px 12px rgba(0,0,0,.5);}
+.logo{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--acc);letter-spacing:1px;}
+.logo span{color:var(--blue);}
+
+.tabs{display:flex;gap:4px;padding:14px 14px 0;overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{background:var(--surf);border:1px solid var(--brd);border-bottom:none;
+  color:var(--txt2);padding:9px 16px;border-radius:8px 8px 0 0;cursor:pointer;
+  font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;
+  transition:all .15s;display:flex;align-items:center;gap:6px;}
+.tab-btn:hover{color:var(--txt);background:var(--surf2);}
+.tab-btn.active{background:var(--surf2);color:var(--blue);border-color:var(--blue);border-bottom-color:var(--surf2);}
+
+.game-area{background:var(--surf2);border:1px solid var(--brd);border-radius:0 12px 12px 12px;
+  margin:0 14px 24px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.4);}
+.screen{display:none;} .screen.active{display:block;}
+
+h2{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--acc);margin-bottom:4px;}
+.sub{color:var(--txt3);font-size:13px;margin-bottom:20px;}
+
+.btn{background:var(--surf3);border:1px solid var(--brd);color:var(--txt);
+  padding:10px 22px;border-radius:8px;cursor:pointer;font-family:'Rajdhani',sans-serif;
+  font-size:15px;font-weight:600;transition:all .15s;display:inline-flex;align-items:center;gap:7px;}
+.btn:hover{background:var(--acc);color:#111;}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff;}
+.btn.blue:hover{background:#1e88e5;}
+
+.card{background:var(--surf3);border:1px solid var(--brd);border-radius:10px;
+  padding:14px 18px;display:inline-flex;flex-direction:column;align-items:center;min-width:90px;}
+.card .v{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--blue);}
+.card .l{font-size:11px;color:var(--txt3);margin-top:2px;}
+
+#g-input{background:var(--surf3);border:1px solid var(--brd);color:var(--txt);
+  padding:11px 14px;border-radius:8px;font-size:18px;font-family:'Rajdhani',sans-serif;
+  font-weight:600;width:120px;outline:none;}
+#g-input:focus{border-color:var(--blue);}
+#g-range{font-size:13px;color:var(--txt3);background:var(--surf3);border:1px solid var(--brd);
+  border-radius:8px;padding:9px 14px;display:inline-block;margin-bottom:12px;}
+#g-chips{display:flex;flex-wrap:wrap;gap:6px;min-height:30px;margin-bottom:8px;}
+.chip{padding:3px 11px;border-radius:20px;font-size:13px;font-weight:500;
+  background:var(--surf3);border:1px solid var(--brd);color:var(--txt2);}
+.chip-lo{border-color:var(--blue)!important;color:var(--blue)!important;}
+.chip-hi{border-color:var(--red)!important;color:var(--red)!important;}
+.chip-win{border-color:var(--green)!important;color:var(--green)!important;}
+.msg{padding:11px 15px;border-radius:8px;font-size:14px;margin-top:8px;}
+.msg-info{background:rgba(66,165,245,.1);border:1px solid rgba(66,165,245,.3);color:var(--blue);}
+.msg-ok{background:rgba(102,187,106,.1);border:1px solid rgba(102,187,106,.3);color:var(--green);}
+.msg-err{background:rgba(239,83,80,.1);border:1px solid rgba(239,83,80,.3);color:var(--red);}
+
+#snake-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;}
+#sn-cards{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.snake-cw{position:relative;display:inline-block;}
+#snake-canvas{background:#1e1e1e;border:2px solid var(--brd);border-radius:10px;display:block;max-width:100%;}
+#snake-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;background:rgba(26,26,26,.88);border-radius:10px;gap:12px;}
+#snake-ov h3{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;}
+.dpad{display:none;grid-template-columns:repeat(3,50px);grid-template-rows:repeat(3,50px);gap:4px;margin-top:4px;}
+@media(max-width:600px){.dpad{display:grid;}}
+.dp{background:var(--surf3);border:1px solid var(--brd);border-radius:8px;color:var(--txt2);
+  font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  user-select:none;-webkit-tap-highlight-color:transparent;}
+.dp:active,.dp:hover{background:var(--blue);color:#fff;}
+.dp-empty{background:transparent;border:none;}
+
+#aim-wrap{display:flex;flex-direction:column;gap:12px;}
+#aim-cards{display:flex;gap:10px;flex-wrap:wrap;}
+#aim-arena{
+  background:var(--surf);border:2px solid var(--brd);border-radius:10px;
+  position:relative;overflow:hidden;height:300px;
+  user-select:none;-webkit-tap-highlight-color:transparent;touch-action:none;
+}
+.aim-tgt{
+  position:absolute;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#ef9a9a,#ef5350);
+  box-shadow:0 0 14px rgba(239,83,80,.55);
+  transform:translate(-50%,-50%) scale(0);
+  transition:transform .12s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;
+}
+.aim-tgt.on{transform:translate(-50%,-50%) scale(1);}
+#aim-flash{position:absolute;inset:0;background:rgba(239,83,80,.1);
+  pointer-events:none;opacity:0;transition:opacity .15s;border-radius:10px;}
+.aim-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:14px;background:rgba(26,26,26,.85);border-radius:10px;}
+#aim-bar-wrap{background:var(--surf3);border-radius:4px;height:7px;overflow:hidden;margin:4px 0 10px;}
+#aim-bar-fill{height:100%;background:var(--blue);border-radius:4px;width:0;transition:width .4s;}
+
+#cps-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;}
+#cps-area{
+  background:var(--surf);border:2px solid var(--brd);border-radius:14px;
+  width:100%;max-width:480px;height:200px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;cursor:pointer;
+  user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  transition:border-color .15s,background .1s;
+}
+#cps-area:active{background:var(--surf3);}
+#cps-area.running{border-color:var(--blue);}
+#cps-num{font-family:'Rajdhani',sans-serif;font-size:72px;font-weight:700;color:var(--blue);line-height:1;}
+#cps-lbl{font-size:13px;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+#cps-prog{position:absolute;bottom:0;left:0;height:4px;background:var(--blue);width:100%;}
+#cps-cards{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+#cps-hist{display:flex;gap:3px;align-items:flex-end;height:56px;width:100%;max-width:480px;}
+.cps-b{flex:1;background:var(--blue);opacity:.55;border-radius:3px 3px 0 0;min-width:6px;}
+#cps-rate{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;text-align:center;}
+
+@media(max-width:520px){
+  .game-area{padding:16px 10px;}
+  h2{font-size:20px;}
+  #aim-arena{height:240px;}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="logo">мини<span>гамес</span></div></nav>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('guess',this)">🎲 Угадай число</button>
+  <button class="tab-btn"        onclick="switchTab('snake',this)">🐍 Змейка</button>
+  <button class="tab-btn"        onclick="switchTab('aim',this)"  >🎯 Аим</button>
+  <button class="tab-btn"        onclick="switchTab('cps',this)"  >🖱️ CPS</button>
+</div>
+
+<div class="game-area">
+
+<div id="s-guess" class="screen active">
+  <h2>🎲 Угадай число</h2>
+  <p class="sub">Я загадал число от 1 до 100. Попробуй угадать!</p>
+  <div id="g-range">Диапазон: <b id="g-lo">1</b> — <b id="g-hi">100</b></div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0;">
+    <input id="g-input" type="number" min="1" max="100" placeholder="Число..."
+           onkeydown="if(event.key==='Enter')gGuess()">
+    <button class="btn blue" onclick="gGuess()">Проверить</button>
+    <button class="btn"      onclick="gReset()">Новая игра</button>
+  </div>
+  <div style="font-size:13px;color:var(--txt3);margin-bottom:10px;">Попыток: <b id="g-cnt">0</b></div>
+  <div id="g-chips"></div>
+  <div id="g-msg" style="display:none;" class="msg"></div>
+</div>
+
+<div id="s-snake" class="screen">
+  <h2>🐍 Змейка</h2>
+  <p class="sub">Стрелки / WASD. На телефоне — кнопки ниже.</p>
+  <div id="snake-wrap">
+    <div id="sn-cards">
+      <div class="card"><div class="v" id="sn-score">0</div><div class="l">Счёт</div></div>
+      <div class="card"><div class="v" id="sn-best">0</div><div class="l">Рекорд</div></div>
+      <div class="card"><div class="v" id="sn-lvl">1</div><div class="l">Уровень</div></div>
+    </div>
+    <div class="snake-cw">
+      <canvas id="snake-canvas" width="320" height="320"></canvas>
+      <div id="snake-ov">
+        <h3 id="sn-ov-title">Змейка</h3>
+        <button class="btn blue" id="sn-btn" onclick="snStart()">▶ Начать</button>
+      </div>
+    </div>
+    <div class="dpad">
+      <div class="dp-empty"></div>
+      <button class="dp" onpointerdown="snDir('U')">▲</button>
+      <div class="dp-empty"></div>
+      <button class="dp" onpointerdown="snDir('L')">◀</button>
+      <div class="dp-empty"></div>
+      <button class="dp" onpointerdown="snDir('R')">▶</button>
+      <div class="dp-empty"></div>
+      <button class="dp" onpointerdown="snDir('D')">▼</button>
+      <div class="dp-empty"></div>
+    </div>
+  </div>
+</div>
+
+<div id="s-aim" class="screen">
+  <h2>🎯 Проверка аима</h2>
+  <p class="sub">Кликай по красным мишеням — 30 штук за раунд!</p>
+  <div id="aim-wrap">
+    <div id="aim-cards">
+      <div class="card"><div class="v" id="a-hits">0</div><div class="l">Попаданий</div></div>
+      <div class="card"><div class="v" id="a-miss">0</div><div class="l">Промахов</div></div>
+      <div class="card"><div class="v" id="a-avg">—</div><div class="l">Ср. мс</div></div>
+      <div class="card"><div class="v" id="a-acc">—</div><div class="l">Точность</div></div>
+    </div>
+    <div id="aim-arena">
+      <div id="aim-flash"></div>
+      <div class="aim-ov" id="aim-ov">
+        <div style="color:var(--txt2);font-size:14px;">Кликай по мишеням!</div>
+        <button class="btn blue" id="aim-start-btn">▶ Старт</button>
+      </div>
+    </div>
+    <div id="aim-res-row" style="display:none;width:100%;max-width:480px;">
+      <div style="font-size:13px;color:var(--txt3);">Точность</div>
+      <div id="aim-bar-wrap"><div id="aim-bar-fill"></div></div>
+      <button class="btn blue" id="aim-again-btn">▶ Ещё раз</button>
+    </div>
+  </div>
+</div>
+
+<div id="s-cps" class="screen">
+  <h2>🖱️ CPS Тест</h2>
+  <p class="sub">Кликай как можно быстрее 5 секунд!</p>
+  <div id="cps-wrap">
+    <div id="cps-area">
+      <div id="cps-num">0</div>
+      <div id="cps-lbl">Нажми чтобы начать</div>
+      <div id="cps-prog"></div>
+    </div>
+    <div id="cps-cards">
+      <div class="card"><div class="v" id="c-best">0</div><div class="l">Рекорд</div></div>
+      <div class="card"><div class="v" id="c-total">0</div><div class="l">Кликов</div></div>
+      <div class="card"><div class="v" id="c-left">5.0</div><div class="l">Секунд</div></div>
+    </div>
+    <div id="cps-hist"></div>
+    <div id="cps-rate"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('s-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+var gSecret, gCount, gActive;
+function gReset() {
+  gSecret = Math.floor(Math.random()*100)+1;
+  gCount = 0; gActive = true;
+  document.getElementById('g-cnt').textContent = 0;
+  document.getElementById('g-chips').innerHTML = '';
+  document.getElementById('g-lo').textContent = 1;
+  document.getElementById('g-hi').textContent = 100;
+  document.getElementById('g-input').value = '';
+  document.getElementById('g-input').disabled = false;
+  var m = document.getElementById('g-msg');
+  m.style.display='none';
+}
+function gGuess() {
+  if (!gActive) { gReset(); return; }
+  var inp = document.getElementById('g-input');
+  var n = parseInt(inp.value);
+  if (!n || n < 1 || n > 100) { gMsg('Введи число от 1 до 100','msg-err'); return; }
+  gCount++;
+  document.getElementById('g-cnt').textContent = gCount;
+  var chip = document.createElement('span');
+  chip.className = 'chip';
+  chip.textContent = n;
+  if (n === gSecret) {
+    chip.classList.add('chip-win');
+    document.getElementById('g-chips').appendChild(chip);
+    gMsg('🎉 Верно! Угадал за '+gCount+' попыток!','msg-ok');
+    gActive = false; inp.disabled = true; return;
+  }
+  if (n < gSecret) {
+    chip.classList.add('chip-lo');
+    var lo = document.getElementById('g-lo');
+    if (n > parseInt(lo.textContent)) lo.textContent = n;
+    gMsg('📈 '+n+' — слишком мало','msg-info');
+  } else {
+    chip.classList.add('chip-hi');
+    var hi = document.getElementById('g-hi');
+    if (n < parseInt(hi.textContent)) hi.textContent = n;
+    gMsg('📉 '+n+' — слишком много','msg-err');
+  }
+  document.getElementById('g-chips').appendChild(chip);
+  inp.value = ''; inp.focus();
+}
+function gMsg(t, cls) {
+  var el = document.getElementById('g-msg');
+  el.textContent = t; el.className = 'msg '+cls; el.style.display = 'block';
+}
+gReset();
+
+var SZ=20, COLS=16, ROWS=16;
+var snBody, snFood, snDirQ, snDir_, snIval, snSc=0, snBest=0;
+var snCV = document.getElementById('snake-canvas');
+var snCX = snCV.getContext('2d');
+
+function snStart() {
+  document.getElementById('snake-ov').style.display='none';
+  snBody = [{x:8,y:8},{x:7,y:8},{x:6,y:8}];
+  snDir_ = {x:1,y:0}; snDirQ = [];
+  snSc = 0;
+  document.getElementById('sn-score').textContent = 0;
+  document.getElementById('sn-lvl').textContent = 1;
+  snPlace();
+  clearInterval(snIval);
+  snIval = setInterval(snTick, 120);
+}
+function snDir(d) {
+  var m = {U:{x:0,y:-1},D:{x:0,y:1},L:{x:-1,y:0},R:{x:1,y:0}};
+  var nd = m[d];
+  var last = snDirQ.length ? snDirQ[snDirQ.length-1] : snDir_;
+  if (last.x+nd.x===0 && last.y+nd.y===0) return;
+  snDirQ.push(nd);
+  if (snDirQ.length>2) snDirQ.shift();
+}
+document.addEventListener('keydown', function(e) {
+  var k={ArrowUp:'U',ArrowDown:'D',ArrowLeft:'L',ArrowRight:'R',
+         w:'U',s:'D',a:'L',d:'R',W:'U',S:'D',A:'L',D:'R'};
+  if (k[e.key]) { e.preventDefault(); snDir(k[e.key]); }
+});
+function snPlace() {
+  var p; do { p={x:Math.floor(Math.random()*COLS),y:Math.floor(Math.random()*ROWS)}; }
+  while (snBody.some(function(s){return s.x===p.x&&s.y===p.y;}));
+  snFood=p;
+}
+function snTick() {
+  if (snDirQ.length) snDir_=snDirQ.shift();
+  var h={x:snBody[0].x+snDir_.x,y:snBody[0].y+snDir_.y};
+  if (h.x<0||h.x>=COLS||h.y<0||h.y>=ROWS||snBody.some(function(s){return s.x===h.x&&s.y===h.y;})) {
+    clearInterval(snIval);
+    document.getElementById('sn-ov-title').textContent='💀 Конец! Счёт: '+snSc;
+    document.getElementById('sn-btn').textContent='🔄 Заново';
+    document.getElementById('snake-ov').style.display='flex';
+    return;
+  }
+  snBody.unshift(h);
+  if (h.x===snFood.x&&h.y===snFood.y) {
+    snSc++;
+    document.getElementById('sn-score').textContent=snSc;
+    if (snSc>snBest){snBest=snSc;document.getElementById('sn-best').textContent=snBest;}
+    document.getElementById('sn-lvl').textContent=Math.floor(snSc/5)+1;
+    snPlace();
+    if (snSc%5===0){clearInterval(snIval);snIval=setInterval(snTick,Math.max(55,120-Math.floor(snSc/5)*12));}
+  } else { snBody.pop(); }
+  snDraw();
+}
+function snDraw() {
+  snCX.fillStyle='#1e1e1e'; snCX.fillRect(0,0,snCV.width,snCV.height);
+  snCX.strokeStyle='rgba(255,255,255,.03)'; snCX.lineWidth=1;
+  for(var i=0;i<COLS;i++){snCX.beginPath();snCX.moveTo(i*SZ,0);snCX.lineTo(i*SZ,snCV.height);snCX.stroke();}
+  for(var j=0;j<ROWS;j++){snCX.beginPath();snCX.moveTo(0,j*SZ);snCX.lineTo(snCV.width,j*SZ);snCX.stroke();}
+  if (snFood) {
+    snCX.fillStyle='#ef5350'; snCX.shadowColor='#ef5350'; snCX.shadowBlur=10;
+    snCX.beginPath(); snCX.arc(snFood.x*SZ+SZ/2,snFood.y*SZ+SZ/2,SZ/2-2,0,Math.PI*2); snCX.fill();
+    snCX.shadowBlur=0;
+  }
+  if (snBody) snBody.forEach(function(s,i){
+    var t=1-i/snBody.length;
+    snCX.fillStyle='rgb('+Math.round(40+66*t)+','+Math.round(100+87*t)+','+Math.round(50+56*t)+')';
+    snCX.beginPath(); snCX.roundRect(s.x*SZ+1,s.y*SZ+1,SZ-2,SZ-2,3); snCX.fill();
+  });
+}
+snDraw();
+
+var aimArena    = document.getElementById('aim-arena');
+var aimFlash    = document.getElementById('aim-flash');
+var aimOv       = document.getElementById('aim-ov');
+var aimResRow   = document.getElementById('aim-res-row');
+var aimBarFill  = document.getElementById('aim-bar-fill');
+
+var aimHits=0, aimMiss=0, aimTimes=[], aimDone=0, aimTot=30;
+var aimActive=false, aimTgt=null, aimT0=0;
+
+document.getElementById('aim-start-btn').addEventListener('click', function(e){
+  e.stopPropagation();
+  aimStart();
+});
+document.getElementById('aim-again-btn').addEventListener('click', function(e){
+  e.stopPropagation();
+  aimStart();
+});
+
+function aimStart() {
+  aimHits=0; aimMiss=0; aimTimes=[]; aimDone=0; aimActive=true;
+  aimOv.style.display='none';
+  aimResRow.style.display='none';
+  if (aimTgt) { aimTgt.remove(); aimTgt=null; }
+  aimUpdStats();
+  setTimeout(aimSpawn, 80);
+}
+
+aimArena.addEventListener('pointerdown', function(e) {
+  if (!aimActive) return;
+  e.preventDefault();
+  var rect = aimArena.getBoundingClientRect();
+  var mx = e.clientX - rect.left;
+  var my = e.clientY - rect.top;
+  if (aimTgt) {
+    var tx = parseFloat(aimTgt.style.left);
+    var ty = parseFloat(aimTgt.style.top);
+    var r  = parseFloat(aimTgt.style.width) / 2;
+    if (Math.hypot(mx-tx, my-ty) <= r+4) {
+      aimHits++;
+      aimTimes.push(Date.now()-aimT0);
+      var dead = aimTgt; aimTgt=null;
+      dead.classList.remove('on');
+      setTimeout(function(){ if(dead.parentNode) dead.remove(); }, 120);
+      aimDone++;
+      aimUpdStats();
+      if (aimDone >= aimTot) { setTimeout(aimEnd, 150); return; }
+      setTimeout(aimSpawn, 60);
+      return;
+    }
+  }
+  aimMiss++;
+  aimFlash.style.opacity='1';
+  setTimeout(function(){ aimFlash.style.opacity='0'; }, 140);
+  aimUpdStats();
+});
+
+function aimSpawn() {
+  if (!aimActive) return;
+  if (aimTgt) { aimTgt.remove(); aimTgt=null; }
+  var sz = Math.random()*28+26;
+  var rect = aimArena.getBoundingClientRect();
+  var W = rect.width, H = rect.height;
+  var x = Math.random()*(W - sz - 8) + sz/2 + 4;
+  var y = Math.random()*(H - sz - 8) + sz/2 + 4;
+  var el = document.createElement('div');
+  el.className = 'aim-tgt';
+  el.style.width = el.style.height = sz+'px';
+  el.style.left = x+'px';
+  el.style.top  = y+'px';
+  aimArena.appendChild(el);
+  aimTgt = el;
+  aimT0 = Date.now();
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('on'); }); });
+}
+function aimEnd() {
+  aimActive = false;
+  if (aimTgt) { aimTgt.remove(); aimTgt=null; }
+  aimUpdStats();
+  var acc = (aimHits+aimMiss) ? aimHits/(aimHits+aimMiss)*100 : 0;
+  aimBarFill.style.width = acc.toFixed(0)+'%';
+  aimResRow.style.display = 'block';
+  aimOv.innerHTML = '<div style="color:var(--txt2);font-size:15px;">Раунд окончен! Точность: '+acc.toFixed(0)+'%</div><button class="btn blue" id="aim-start-btn">▶ Ещё раз</button>';
+  aimOv.style.display = 'flex';
+  document.getElementById('aim-start-btn').addEventListener('click', function(e){
+    e.stopPropagation(); aimStart();
+  });
+}
+function aimUpdStats() {
+  document.getElementById('a-hits').textContent = aimHits;
+  document.getElementById('a-miss').textContent = aimMiss;
+  document.getElementById('a-avg').textContent  = aimTimes.length ? Math.round(aimTimes.reduce(function(a,b){return a+b;},0)/aimTimes.length) : '—';
+  var tot = aimHits+aimMiss;
+  document.getElementById('a-acc').textContent  = tot ? (aimHits/tot*100).toFixed(0)+'%' : '—';
+}
+
+var CPS_DUR = 5000;
+var cpsGoing=false, cpsClicks=0, cpsT0=0, cpsBest=0, cpsBars=[];
+var cpsTimeout=null, cpsRaf=null;
+var cpsArea = document.getElementById('cps-area');
+var cpsProg = document.getElementById('cps-prog');
+
+cpsArea.addEventListener('pointerdown', function(e) {
+  e.preventDefault();
+  if (!cpsGoing) {
+    // Start game
+    cpsGoing=true; cpsClicks=0; cpsT0=Date.now(); cpsBars=[];
+    document.getElementById('cps-hist').innerHTML='';
+    document.getElementById('cps-lbl').textContent='Кликай!';
+    document.getElementById('cps-rate').innerHTML='';
+    document.getElementById('c-total').textContent='0';
+    document.getElementById('c-left').textContent='5.0';
+    cpsArea.classList.add('running');
+    cpsTimeout = setTimeout(cpsEnd, CPS_DUR);
+    cpsRaf = requestAnimationFrame(cpsTick);
+  }
+  cpsClicks++;
+  document.getElementById('c-total').textContent = cpsClicks;
+  var elapsed = Math.max(10, Date.now()-cpsT0);
+  var rate = (cpsClicks/(elapsed/1000)).toFixed(1);
+  document.getElementById('cps-num').textContent = rate;
+  cpsBars.push(parseFloat(rate));
+  if (cpsBars.length>50) cpsBars.shift();
+  cpsDrawBars();
+});
+
+function cpsTick() {
+  if (!cpsGoing) return;
+  var rem = Math.max(0, CPS_DUR-(Date.now()-cpsT0));
+  cpsProg.style.width = (rem/CPS_DUR*100)+'%';
+  document.getElementById('c-left').textContent = (rem/1000).toFixed(1);
+  cpsRaf = requestAnimationFrame(cpsTick);
+}
+function cpsEnd() {
+  clearTimeout(cpsTimeout);
+  cancelAnimationFrame(cpsRaf);
+  cpsGoing=false;
+  cpsArea.classList.remove('running');
+  var elapsed = (Date.now()-cpsT0)/1000;
+  var final = (cpsClicks/elapsed).toFixed(2);
+  document.getElementById('cps-num').textContent = final;
+  cpsProg.style.width='0';
+  document.getElementById('c-left').textContent='0.0';
+  document.getElementById('cps-lbl').textContent='Нажми ещё раз';
+  if (parseFloat(final)>cpsBest) {
+    cpsBest=parseFloat(final);
+    document.getElementById('c-best').textContent=parseFloat(final).toFixed(2);
+  }
+  document.getElementById('cps-rate').innerHTML = cpsRating(parseFloat(final));
+}
+function cpsRating(c) {
+  if (c<3)  return '<span style="color:var(--txt3)">😴 Медленно</span>';
+  if (c<5)  return '<span style="color:var(--blue)">👍 Норма</span>';
+  if (c<8)  return '<span style="color:var(--green)">⚡ Хорошо!</span>';
+  if (c<12) return '<span style="color:var(--yellow)">🔥 Отлично!</span>';
+  return '<span style="color:var(--red)">💥 Невероятно!</span>';
+}
+function cpsDrawBars() {
+  var cont = document.getElementById('cps-hist');
+  cont.innerHTML='';
+  var max = Math.max.apply(null, cpsBars.concat([1]));
+  cpsBars.forEach(function(v) {
+    var b = document.createElement('div');
+    b.className='cps-b';
+    b.style.height=(v/max*52+4)+'px';
+    cont.appendChild(b);
+  });
+}
+</script>
+</body>
+</html>
