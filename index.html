@@ -46,8 +46,31 @@
       box-shadow: var(--elev1);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0 20px;
       z-index: 10;
+    }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      padding: 0 12px;
+      height: 32px;
+      cursor: pointer;
+      color: var(--on-bg);
+      font-family: 'Google Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .03em;
+      transition: border-color .2s, background .2s;
+    }
+    .lang-btn:hover {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.4);
     }
     .app-bar-title {
       font-family: 'Google Sans Mono', monospace;
@@ -187,11 +210,13 @@
 
   <div class="app-bar">
     <div style="display:flex; align-items:center; gap:10px">
-  <span class="material-icons" style="font-size:18px">
-    home
-  </span>
-  <span class="app-bar-title">nepetapip3.github.io</span>
-  </div>
+      <span class="material-icons" style="font-size:18px">home</span>
+      <span class="app-bar-title">nepetapip3.github.io</span>
+    </div>
+    <button class="lang-btn" onclick="toggleLang()">
+      <span class="material-icons" style="font-size:16px">translate</span>
+      <span id="lang-label">EN</span>
+    </button>
   </div>
 
   <div class="card">
@@ -203,24 +228,29 @@
     <div class="btn-grid">
 
         <a class="md-btn" href="https://nepetapip3.github.io/bio">
-        <span class="material-icons" style="font-size:18px">person</span>
-        Bio
-      </a>
+  <span class="material-icons" style="font-size:18px">person</span>
+  <span id="btn-bio">Bio</span>
+</a>
 
-      <a class="md-btn" href="https://nepetapip3.github.io/minigames">
-        <span class="material-icons" style="font-size:18px">sports_esports</span>
-        Minigames
-      </a>
+<a class="md-btn" href="https://nepetapip3.github.io/minigames">
+  <span class="material-icons" style="font-size:18px">sports_esports</span>
+  <span id="btn-minigames">Minigames</span>
+</a>
 
-      <a class="md-btn" href="https://nepetapip3.github.io/dvd-rat">
-        <span class="material-icons" style="font-size:18px">pest_control_rodent</span>
-        DVD-Rat
-      </a>
+<a class="md-btn" href="https://nepetapip3.github.io/dvd-rat">
+  <span class="material-icons" style="font-size:18px">pest_control_rodent</span>
+  <span id="btn-dvd">DVD-Rat</span>
+</a>
 
-      <a class="md-btn" href="https://nepetapip3.github.io/gusenitsy">
-        <span class="material-icons" style="font-size:18px">bug_report</span>
-        GUSENITSY
-      </a>
+<a class="md-btn" href="https://nepetapip3.github.io/gusenitsy">
+  <span class="material-icons" style="font-size:18px">bug_report</span>
+  <span id="btn-gusenitsy">GUSENITSY</span>
+</a>
+
+<a class="md-btn" href="https://nepetapip3.github.io/v0dol4z_shakal1zator">
+  <span class="material-icons" style="font-size:18px">add_photo_alternate</span>
+  <span id="btn-shakal">JPEG CORRUPT.</span>
+</a>
 
 
     </div>
@@ -259,6 +289,41 @@
 
 document.getElementById('footer-text').textContent =
   footerVariants[Math.floor(Math.random() * footerVariants.length)];
+
+    const translations = {
+  en: {
+    headline: "Hey! It looks like you've landed on the homepage of nepetapip3.github.io.",
+    subheadline: "You can choose where to go next by clicking the buttons below.",
+    bio: "Bio",
+    minigames: "Minigames",
+    dvd: "DVD-Rat",
+    gusenitsy: "GUSENITSY",
+    shakal: "shakal1zator"
+  },
+  ru: {
+    headline: "Эй! Кажется, вы попали на заглавную страницу nepetapip3.github.io.",
+    subheadline: "Вы можете выбрать куда пойти дальше, нажав кнопки ниже.",
+    bio: "Био",
+    minigames: "Мини-игры",
+    dvd: "DVD-Крысюк",
+    gusenitsy: "ГУСЕНИЦЫ",
+    shakal: "shakal1zator"
+  }
+};
+
+    let currentLang = 'en';
+
+    function toggleLang() {
+  currentLang = currentLang === 'en' ? 'ru' : 'en';
+  document.getElementById('lang-label').textContent = currentLang === 'en' ? 'EN' : 'RU';
+  document.querySelector('.headline').textContent = translations[currentLang].headline;
+  document.querySelector('.subheadline').textContent = translations[currentLang].subheadline;
+  document.getElementById('btn-bio').textContent = translations[currentLang].bio;
+  document.getElementById('btn-minigames').textContent = translations[currentLang].minigames;
+  document.getElementById('btn-dvd').textContent = translations[currentLang].dvd;
+  document.getElementById('btn-gusenitsy').textContent = translations[currentLang].gusenitsy;
+  document.getElementById('btn-shakal').textContent = translations[currentLang].shakal;
+}
   </script>
 </body>
 </html>
