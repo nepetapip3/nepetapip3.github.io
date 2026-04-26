@@ -1,29 +1,82 @@
-## [nepetapip3.github.io](http://nepetapip3.github.io)   ![html5](https://camo.githubusercontent.com/4e39004843387226e83eaacfb24a8df02adb769152f2f7f3db1926cb04500f6d/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f68746d6c352d2532334533344632362e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d68746d6c35266c6f676f436f6c6f723d7768697465) ![css](https://camo.githubusercontent.com/3f1b0ba4fa782af96fd436adcddc8716248a6b5c93d78c8ad742611357bed209/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f637373332d2532333135373242362e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d63737333266c6f676f436f6c6f723d7768697465) ![claude](https://camo.githubusercontent.com/22cd3c7c075bbc45bfd71aa1bd1232b55a9cc8aa5c92a7697c8fe42c20d89e5f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f436c617564652d4439373735373f7374796c653d666f722d7468652d6261646765266c6f676f3d636c61756465266c6f676f436f6c6f723d7768697465)
+# [nepetapip3.github.io](https://nepetapip3.github.io)
 
-## About
+> A tree of my hobby web projects — all living in one repository.
 
-**Warning! The code was written by Claude AI, this is just a hobby project!**
+[![Repo Size](https://img.shields.io/github/repo-size/nepetapip3/nepetapip3.github.io)](https://github.com/nepetapip3/nepetapip3.github.io)
+[![Commits](https://img.shields.io/github/commit-activity/m/nepetapip3/nepetapip3.github.io)](https://github.com/nepetapip3/nepetapip3.github.io/commits)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+[![Claude](https://img.shields.io/badge/Claude-D97757?logo=claude&logoColor=fff)](https://claude.ai)
 
-A simple site in Material Design style, with buttons and other..
+---
 
-**[Bio](https://nepetapip3.github.io/bio)**
+## 📁 Projects
 
-Simple biography card, with avatar, and social media buttons
+| # | Project | Description | EN |
+|---|---------|-------------|-----|
+| 1 | [Bio](#1-bio) | Personal biography page | ✅ |
+| 2 | [DVD-Rat](#2-dvd-rat) | DVD bouncing animation | ✅ |
+| 3 | [v0dol4z shakal1zator](#3-v0dol4z-shakal1zator) | JPEG corruption tool | ✅ |
+| 4 | [Minigames](#4-minigames) | 4 browser mini-games | ❌ |
+| 5 | [GUSENITSY](#5-gusenitsy) | Flying caterpillars animation | ❌ |
 
-**[DVD-Rat](https://nepetapip3.github.io/dvd-rat)**
+---
 
-A simple animation of a bigrat in the DVD style. Nothing more.
+### 1. Bio
+**🔗 [nepetapip3.github.io/bio](https://nepetapip3.github.io/bio)**
 
-**[GUSENITSY](https://nepetapip3.github.io/gusenitsy)**
+Simple personal biography page, designed in Material Design style.
 
-A silly project created just for fun.
-An animation of caterpillars flying off-screen, complete with rainbow effects and total anarchy
-Warning: This site may lag on low-end devices.
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+🌐 English: ✅
 
-**[Minigames](https://nepetapip3.github.io/minigames)**
+---
 
-A Simple Page with Mini-Games
-Guess the Number
-Snake
-Aim Trainer
-and CPS Test
+### 2. DVD-Rat
+**🔗 [nepetapip3.github.io/dvd-rat](https://nepetapip3.github.io/dvd-rat)**
+
+Classic DVD screensaver animation, but with a big rat bouncing around a gray background.
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)  
+🌐 English: ✅
+
+---
+
+### 3. v0dol4z shakal1zator
+**🔗 [nepetapip3.github.io/v0dol4z_shakal1zator](https://nepetapip3.github.io/v0dol4z_shakal1zator)**
+
+A simple JPEG corruption site with 6 levels of image degradation.
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)  
+🌐 English: ✅
+
+---
+
+### 4. Minigames
+**[nepetapip3.github.io/minigames](https://nepetapip3.github.io/minigames)**
+
+A website with 4 browser mini-games:
+- Guess the Number
+- Snake
+- Aim Trainer
+- CPS Test
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+🌐 English: ❌
+
+---
+
+### 5. GUSENITSY
+**🔗 [nepetapip3.github.io/gusenitsy](https://nepetapip3.github.io/gusenitsy)**
+
+A chaotic animation of flying caterpillars with a rainbow screen effect. No deeper meaning. None at all.
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)  
+🌐 English: ❌
